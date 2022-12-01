@@ -2,7 +2,6 @@ import React from 'react';
 import { styled } from '@mui/system';
 import { Button } from '@mui/material';
 import pug_in_a_blanket from '../../assets/images/pug_in_a_blanket.jpg'
-import { url } from 'inspector';
 import { Link } from 'react-router-dom';
 
 interface Props {

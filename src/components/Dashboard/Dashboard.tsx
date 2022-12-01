@@ -10,13 +10,20 @@ import { Drawer as MUIDrawer,
     Divider,
     Button,
     CssBaseline,
-    Box
+    Box,
+    Dialog,
+    DialogActions,
+    DialogContent,
+    DialogContentText,
+    DialogTitle,
 } from '@mui/material';
 import MenuIcon from '@mui/icons-material/Menu';
 import { ChevronRight, ChevronLeft } from '@mui/icons-material';
 import { useNavigate } from 'react-router-dom';
 import { theme } from '../../Theme/themes';
 import { DataTable } from '../DataTable'
+import { DogForm } from '../DogForm';
+import corgi from '../../assets/images/corgi.jpg';
 
 const drawerWidth = 240;
 
@@ -84,13 +91,14 @@ const myStyles = {
             backgroundColor: theme.palette.error.contrastText,
             color: theme.palette.error.dark
         }
-    }
+    },
 }
 
 export const Dashboard = () => {
     const navigate = useNavigate();
     
     const[open, setOpen] = useState(false);
+    const[dialogOpen, setDialogOpen] = useState(false);
 
     const handleDrawerOpen = () => {
         setOpen(true);
@@ -98,6 +106,14 @@ export const Dashboard = () => {
 
     const handleDrawerClose = () => {
         setOpen(false);
+    };
+
+    const handleDialogOpen = () => {
+        setDialogOpen(true)
+    };
+
+    const handleDialogClose = () => {
+        setDialogOpen(false)
     };
 
     const itemsList = [
@@ -131,8 +147,19 @@ export const Dashboard = () => {
                     </IconButton>
 
                     <Typography variant='h6' noWrap>Dashboard</Typography>
-                    <Button sx = {myStyles.toolbarButton}>Create New Dog</Button>
 
+                    <Button sx = {myStyles.toolbarButton} onClick={handleDialogOpen}>Create New Dog</Button>
+                    <Dialog open={dialogOpen} onClose={handleDialogClose} aria-labelledby='form-dialog-title'>
+                        <DialogTitle id='form-dialog-title'>Add New Dog</DialogTitle>
+                        <DialogContent>
+                            <DialogContentText>Add New Dog</DialogContentText>
+                            <DogForm/>
+                        </DialogContent>
+                    
+                        <DialogActions>
+                            <Button onClick={handleDialogClose} color="error">Cancel</Button>
+                        </DialogActions>
+                    </Dialog>
                 </Toolbar>
             </AppBar>
 
