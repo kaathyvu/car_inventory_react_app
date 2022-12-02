@@ -4,11 +4,13 @@ import { DataGrid, GridColDef, GridSelectionModel } from '@mui/x-data-grid';
 import {
     Box,
     Button,
+    Container,
     Dialog,
     DialogActions,
     DialogContent,
     DialogContentText,
-    DialogTitle
+    DialogTitle,
+    Typography
 } from '@mui/material';
 import { serverCalls } from '../../api';
 import { useGetData } from '../../custom-hooks';
@@ -30,7 +32,32 @@ const myStyles = {
         height: 400, 
         width: '100%',
         display:'flex',
-    }
+    },
+    dashboardButton: {
+        backgroundColor: '#765f61',
+        margin: '1em',
+        padding: '0',
+        color: 'white',
+        height: '50px',
+        width: '240px',
+        border: 'none',
+        textAlign: 'center',
+        boxShadow: 'rgb(0 0 0 / 25%) 0px 2px 4px 0px',
+        fontSize: '16px',
+        lineHeight: '48px',
+        display: 'inline-block',
+        borderRadius: '1px',
+        fontFamily: 'roboto',
+        cursor: 'pointer',
+    },
+    textStyle: {
+        fontFamily: 'Roboto;',
+        textAlign: 'center',
+    },
+    containerStyle: {
+        marginTop: '2em',
+        fontFamily:'roboto',
+    },
 }
 const columns: GridColDef[] = [
     { 
@@ -96,34 +123,48 @@ export const DataTable = () => {
 
     console.log(gridData)
 
-    return (
-        <Box>
-            <DataGrid
-                rows={dogData}
-                columns={columns}
-                pageSize={5}
-                rowsPerPageOptions={[5]}
-                checkboxSelection
-                onSelectionModelChange={(newSelectionModel) => {setData(newSelectionModel);}}
-                {...dogData}
-                sx={myStyles.dataTable}
-            />
+    const myAuth = localStorage.getItem('myAuth')
+    console.log(myAuth)
 
-            <Button sx={myStyles.updateButton} onClick={handleOpen} variant="contained">Update</Button> 
-            <Button onClick={deleteData} variant="contained" color="error">Delete</Button>
-
-            <Dialog open={open} onClose={handleClose} aria-labelledby="dialog-form-title">
-                <DialogTitle id='dialog-form-title'>Update Dog</DialogTitle>
-                <DialogContent>
-                    <DialogContentText>Dog ID: {gridData[0]}</DialogContentText>
-                        <DogForm id={`${gridData[0]}`}/>
-                </DialogContent>
-                <DialogActions>
-                    <Button onClick={handleClose} color="error">Cancel</Button>
-                </DialogActions>
-            </Dialog>
-
-        </Box>
-    )
+    if (myAuth == 'true') {
+        return (
+            <Box>
+                <DataGrid
+                    rows={dogData}
+                    columns={columns}
+                    pageSize={5}
+                    rowsPerPageOptions={[5]}
+                    checkboxSelection
+                    onSelectionModelChange={(newSelectionModel) => {setData(newSelectionModel);}}
+                    {...dogData}
+                    sx={myStyles.dataTable}
+                />
+    
+                <Button sx={myStyles.updateButton} onClick={handleOpen} variant="contained">Update</Button> 
+                <Button onClick={deleteData} variant="contained" color="error">Delete</Button>
+    
+                <Dialog open={open} onClose={handleClose} aria-labelledby="dialog-form-title">
+                    <DialogTitle id='dialog-form-title'>Update Dog</DialogTitle>
+                    <DialogContent>
+                        <DialogContentText>Dog ID: {gridData[0]}</DialogContentText>
+                            <DogForm id={`${gridData[0]}`}/>
+                    </DialogContent>
+                    <DialogActions>
+                        <Button onClick={handleClose} color="error">Cancel</Button>
+                    </DialogActions>
+                </Dialog>
+    
+            </Box>
+        )
+    } else {
+        return (
+            <Container maxWidth='sm' sx={myStyles.containerStyle}>
+                <Typography sx={myStyles.textStyle}>
+                    <p>Please Sign in to View Your Data</p>
+                    <Button sx={myStyles.dashboardButton} href='/signin'>Sign In Here</Button>
+                </Typography>
+            </Container>
+        )
+    }
 }
 

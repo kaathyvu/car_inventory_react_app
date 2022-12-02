@@ -124,7 +124,12 @@ export const Dashboard = () => {
         {
             text: 'Sign-In',
             onClick: () => navigate('/signin')
-        }
+        },
+        {
+            text: 'Sign-Out',
+            onClick: () => navigate('/signout')
+        },
+
     ];
 
     return (

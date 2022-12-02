@@ -3,6 +3,7 @@ import { styled } from '@mui/system';
 import { Button } from '@mui/material';
 import pug_in_a_blanket from '../../assets/images/pug_in_a_blanket.jpg'
 import { Link } from 'react-router-dom';
+import { SignUsOut } from '../SignIn/SignIn'
 
 interface Props {
     title: string;
@@ -78,27 +79,56 @@ const MainText = styled('div')({
 })
 
 export const Home = (props:Props) => {
-    return (
-        <Root>
-            <NavbarContainer>
-                <Logo>
-                    <LogoA to='/'>Dawgz</LogoA>
-                </Logo>
-                <LogoNavigation>
-                    <li><NavA to="/">Home</NavA></li>
-                    <li><NavA to="/dashboard">Dashboard</NavA></li>
-                    <li><NavA to="/signin">Sign In</NavA></li>
-                </LogoNavigation>
-            </NavbarContainer>
-            <Main>
-                <MainText>
-                    <h1>{props.title}</h1>
-                    <p>Dogs are way cooler than cars.</p>
-                    <p>I mean, look at this freakin' pug in a blanket!?</p>
-                    <p>It can't get any better than that.</p><br></br>
-                    <Button color='error' variant='contained' component={Link} to='/dashboard'>See the dawgs</Button>
-                </MainText>
-            </Main>
-        </Root>
-    )
+    let MyAuth = localStorage.getItem('myAuth')
+
+    if (MyAuth == 'true') {
+        return (
+            <Root>
+                <NavbarContainer>
+                    <Logo>
+                        <LogoA to='/'>Dawgz</LogoA>
+                    </Logo>
+                    <LogoNavigation>
+                        <li><NavA to="/">Home</NavA></li>
+                        <li><NavA to="/dashboard">Dashboard</NavA></li>
+                        <li><NavA to="/signout">Sign Out</NavA></li>
+                    </LogoNavigation>
+                </NavbarContainer>
+                <Main>
+                    <MainText>
+                        <h1>{props.title}</h1>
+                        <p>Dogs are way cooler than cars.</p>
+                        <p>I mean, look at this freakin' pug in a blanket!?</p>
+                        <p>It can't get any better than that.</p><br></br>
+                        <Button color='error' variant='contained' component={Link} to='/dashboard'>See the dawgs</Button>
+                    </MainText>
+                </Main>
+            </Root>
+        )
+    } else {
+        return (
+            <Root>
+                <NavbarContainer>
+                    <Logo>
+                        <LogoA to='/'>Dawgz</LogoA>
+                    </Logo>
+                    <LogoNavigation>
+                        <li><NavA to="/">Home</NavA></li>
+                        <li><NavA to="/dashboard">Dashboard</NavA></li>
+                        <li><NavA to="/signin">Sign In</NavA></li>
+                        <li><NavA to="/signup">Sign Up</NavA></li>
+                    </LogoNavigation>
+                </NavbarContainer>
+                <Main>
+                    <MainText>
+                        <h1>{props.title}</h1>
+                        <p>Dogs are way cooler than cars.</p>
+                        <p>I mean, look at this freakin' pug in a blanket!?</p>
+                        <p>It can't get any better than that.</p><br></br>
+                        <Button color='error' variant='contained' component={Link} to='/dashboard'>See the dawgs</Button>
+                    </MainText>
+                </Main>
+            </Root>
+        )
+    }
 }
